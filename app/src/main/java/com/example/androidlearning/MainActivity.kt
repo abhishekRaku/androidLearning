@@ -80,8 +80,9 @@ class MainActivity : AppCompatActivity() {
                 }
             }
 
-            imageAdapter = ImageAdaptor(imageViewModel.imageList) // did not used live data
+            imageAdapter = ImageAdaptor(imageViewModel.imageList) // did not used live data that why passing list after all operations
             binding.imageRecycleView.adapter = imageAdapter
+
         }
 
 
