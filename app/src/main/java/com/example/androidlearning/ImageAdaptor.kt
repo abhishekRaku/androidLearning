@@ -24,9 +24,6 @@ class ImageAdaptor(private val imageList: List<ImageModel>): RecyclerView.Adapte
         return imageList.size
     }
 
-    fun updateImageList(imageList: MutableList<ImageModel>){
-        imageList.addAll(imageList)
-    }
 }
 
 class ImageViewHolder(private val binding: ImageListBinding): RecyclerView.ViewHolder(binding.root){
