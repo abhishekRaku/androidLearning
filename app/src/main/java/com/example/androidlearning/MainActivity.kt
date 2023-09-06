@@ -34,4 +34,6 @@ class MainActivity : AppCompatActivity() {
         fragmentTransaction.replace(binding.myFrameLayout.id,fragment)
         fragmentTransaction.commit()
     }
+
+
 }
