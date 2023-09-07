@@ -59,6 +59,7 @@ class MainActivity : AppCompatActivity() {
         val sortOrder = "${MediaStore.Images.Media.DATE_TAKEN} DESC"
 
         binding.getImagesBtn.setOnClickListener {
+            imageViewModel.imageList.clear()
             contentResolver.query(
                 uri,
                 projection,
