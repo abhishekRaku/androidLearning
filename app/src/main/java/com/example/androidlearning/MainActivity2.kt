@@ -1,44 +1,34 @@
 package com.example.androidlearning
 
+import android.content.Intent
+import android.content.ServiceConnection
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
+import com.example.androidlearning.databinding.ActivityMain2Binding
+import com.example.androidlearning.databinding.ActivityMainBinding
+import java.util.concurrent.Executor
 
 class MainActivity2 : AppCompatActivity() {
-    private val i=0
+    private lateinit var binding: ActivityMain2Binding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main2)
-        Log.i("Abhi","Activity2 : onCreated")
-    }
-
-    override fun onStart() {
-        super.onStart()
-        Log.i("Abhi","Activity2 : onStart")
+        binding = ActivityMain2Binding.inflate(layoutInflater)
+        setContentView(binding.root)
+        val givenData = intent.getStringExtra("GIVEN_DATA").toString()
+        if(givenData.isNotEmpty()){
+            binding.tvResult.text = "WELCOME $givenData"
+        }
     }
 
     override fun onResume() {
         super.onResume()
-        Log.i("Abhi","Activity2 : onResume")
-    }
-
-    override fun onPause() {
-        super.onPause()
-        Log.i("Abhi","Activity2 : onPause")
-    }
-
-    override fun onStop() {
-        super.onStop()
-        Log.i("Abhi","Activity2 : onStop")
-    }
-
-    override fun onRestart() {
-        super.onRestart()
-        Log.i("Abhi","Activity2 : onRestart")
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        Log.i("Abhi","Activity2 : onDestroy")
+        binding.btnReturn.setOnClickListener {
+            if(binding.etvData.text.toString().isNotEmpty()){
+                val intent2 = Intent(this,MainActivity::class.java)
+                intent2.putExtra("RETURNED_DATA",binding.etvData.text.toString())
+                setResult(200,intent2)
+                finish()
+            }
+        }
     }
 }
