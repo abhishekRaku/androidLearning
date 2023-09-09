@@ -6,27 +6,31 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="108dp"
-        android:layout_marginTop="148dp"
-        android:text="Activity1"
-        android:textSize="34sp"
+
+    <FrameLayout
+        android:id="@+id/myFrameLayout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/myBottomNav"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <Button
-        android:id="@+id/goTobtn"
-        android:layout_width="wrap_content"
+    </FrameLayout>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/myBottomNav"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="120dp"
-        android:layout_marginBottom="180dp"
-        android:text="To 2nd Activity"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:menu="@menu/bottom_nav_bar"/>
 
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+        app:layout_constraintStart_toStartOf="parent" />
     <TextView
         android:id="@+id/tvCount"
         android:layout_width="wrap_content"
