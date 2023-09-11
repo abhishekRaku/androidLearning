@@ -13,8 +13,20 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         notifications = MyNotifications(this)
 
-        binding.btnSimpleNotification.setOnClickListener {
-            notifications.simpleNotification()
+        binding.btnHeadsUpNotification.setOnClickListener {
+            notifications.headsUpNotification()
+        }
+
+        binding.btnExpandable.setOnClickListener {
+            notifications.expandableNotification()
+        }
+
+        binding.btnActionNoti.setOnClickListener {
+            notifications.actionNotification()
+        }
+
+        binding.btnProgress.setOnClickListener {
+            notifications.progressNotification()
         }
     }
 
