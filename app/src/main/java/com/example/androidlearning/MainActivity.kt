@@ -13,7 +13,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         notifications = MyNotifications(this)
 
-        binding.btnSimple.setOnClickListener {
+        binding.btnSimpleNotification.setOnClickListener {
             notifications.simpleNotification()
         }
     }
