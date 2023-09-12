@@ -28,6 +28,10 @@ class MainActivity : AppCompatActivity() {
         binding.btnProgress.setOnClickListener {
             notifications.progressNotification()
         }
+
+        binding.btnReplyNoti.setOnClickListener {
+            notifications.replyActionNotification()
+        }
     }
 
 //    override fun onResume() {
