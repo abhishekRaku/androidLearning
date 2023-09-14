@@ -1,9 +1,10 @@
 <resources>
     <string name="app_name">AndroidLearning</string>
-<!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="chatlist_fragment">ChatList Fragment</string>
-    <string name="click_me">Click me</string>
-    <string name="home_fragment">HomeFragment</string>
-    <string name="call_fragment">CallFragment</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="dueDateOfTodo">Due Date</string>
+    <string name="insertTodo">Insert</string>
+    <string name="checkBoxHint">Mark as completed</string>
+    <string name="CancelTodo">Cancel</string>
+    <string name="DeleteTodo">Delete</string>
+    <string name="UpdateTodo">Update</string>
 </resources>
