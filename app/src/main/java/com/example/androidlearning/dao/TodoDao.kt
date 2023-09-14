@@ -18,4 +18,7 @@ interface TodoDao {
 
     @Query("SELECT * from todo_table WHERE id = :id")
     suspend fun getTodoById(id: Long): Todo?
+
+    @Query("SELECT * FROM todo_table WHERE title LIKE :query")
+    fun getAllTodoByTitle(query: String): LiveData<List<Todo>>
 }

@@ -14,4 +14,6 @@ class TodoRepository(private val todoDao: TodoDao) {
 
     suspend fun getTodoById(id: Long) = todoDao.getTodoById(id)
 
+    fun getAllTodoByTitle(query: String) = todoDao.getAllTodoByTitle(query)
+
 }

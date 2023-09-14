@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.androidlearning.TodoListAdaptor
 import com.example.androidlearning.databinding.HomePageBinding
@@ -32,6 +33,8 @@ class HomePage : AppCompatActivity() {
             val intent = Intent(this, TodoUpateInsert::class.java)
             startActivity(intent)
         }
+
+       searchTodo()
     }
 
     fun intializeTodoList() {
@@ -48,5 +51,32 @@ class HomePage : AppCompatActivity() {
             todoListAdapter.notifyDataSetChanged()
         }
     }
+
+    private fun searchTodo(){
+        binding.todoSearch.setOnQueryTextListener(object : SearchView.OnQueryTextListener,
+            android.widget.SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                binding.todoSearch.clearFocus()
+                val searchQuery = "%$query%"
+                updateList(searchQuery)
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                val searchQuery = "%$newText%"
+                    updateList(searchQuery)
+                    return false
+            }
+
+            fun updateList(query: String){
+                viewModel.getAllTodoByTitle(query).observe(this@HomePage) {
+                    todoListAdapter.setTodoList(it)
+                    todoListAdapter.notifyDataSetChanged()
+                }
+            }
+
+        })
+    }
+
 }
 

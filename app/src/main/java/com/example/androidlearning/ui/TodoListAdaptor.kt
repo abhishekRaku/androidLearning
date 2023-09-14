@@ -48,7 +48,6 @@ class TodoViewHolder(private val binding: TodoListBinding): RecyclerView.ViewHol
     fun updateTodo(todo: Todo){
         binding.root.setOnClickListener {
             val intent = Intent(binding.root.context, TodoUpateInsert::class.java)
-
             intent.putExtra("TODO_ID", todo.id)
             binding.root.context.startActivity(intent)
         }
