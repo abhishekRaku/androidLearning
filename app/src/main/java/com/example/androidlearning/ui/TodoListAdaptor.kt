@@ -1,6 +1,7 @@
 package com.example.androidlearning
 
 import android.content.Intent
+import android.graphics.Color
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -38,6 +39,10 @@ class TodoViewHolder(private val binding: TodoListBinding): RecyclerView.ViewHol
     fun setTodo(todo: Todo){
         binding.todoTitle.text = todo.title
         binding.todoDes.text = todo.description
+        binding.todoDueDate.text = todo.dueDate
+        if(todo.isCompleted){
+            binding.root.setBackgroundColor(Color.GREEN)
+        }
     }
 
     fun updateTodo(todo: Todo){

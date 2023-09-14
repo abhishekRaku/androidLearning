@@ -27,13 +27,21 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_weight="1" />
-            <ImageButton
-                android:id="@+id/imChecked"
+
+            <CheckBox
+                android:id="@+id/checkTodo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:srcCompat="@drawable/ic_check"
-                android:layout_marginEnd="10dp"
-                android:layout_marginTop="20dp"/>
+                android:tooltipText="@string/checkBoxHint" />
+
+            <Button
+                android:id="@+id/btnCancelDelete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:text="@string/CancelTodo"
+                android:textSize="12dp"
+                />
         </LinearLayout>
 
 
@@ -50,19 +58,24 @@
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
             />
+<!--        <CalendarView-->
+<!--            android:id="@+id/dueDateCalendar"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content" />-->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <EditText
+            <TextView
                 android:id="@+id/etvDate"
-                android:layout_width="100dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:hint="Due Date"
-                android:inputType="date"
+                android:layout_marginStart="12dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="20dp"
-                android:layout_marginStart="10dp"/>
+                android:background="@color/greyWhite"
+                android:hint="@string/dueDateOfTodo"
+                android:onClick="datePicker" />
             <Space
                 android:layout_width="0dp"
                 android:layout_height="0dp"
@@ -71,12 +84,13 @@
                 android:id="@+id/saveUpdateBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Save"
+                android:text="@string/insertTodo"
                 android:layout_marginTop="5dp"
-                android:layout_marginEnd="8dp"
+                android:layout_marginEnd="12dp"
                 android:layout_marginBottom="20dp"/>
 
         </LinearLayout>
+
 
     </LinearLayout>
 

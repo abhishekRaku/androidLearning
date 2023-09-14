@@ -8,6 +8,7 @@ import com.example.androidlearning.model.Todo
 interface TodoDao {
     @Query("SELECT * from todo_table")
     fun getAllTodos(): LiveData<List<Todo>>
+    // in LiveData or flow suspend keyword is not necessary room will execute it automatically in background
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertTodo(todo: Todo)

@@ -15,8 +15,8 @@ data class Todo(
     val title:String,
     @ColumnInfo(name = "description")
     val description: String,
-//    @ColumnInfo(name = "due_date")
-//    val dueDate: Date,
+    @ColumnInfo(name = "due_date")
+    val dueDate: String,
     @ColumnInfo(name = "is_completed")
     val isCompleted: Boolean
 )

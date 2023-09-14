@@ -19,4 +19,8 @@ class TodoUpdateInsertViewModel(private val repository: TodoRepository) : ViewMo
     fun insertTodo(todo: Todo) = viewModelScope.launch {
         repository.insertTodo(todo)
     }
+
+    fun deleteTodo(todo: Todo) = viewModelScope.launch {
+        repository.deleteTodo(todo)
+    }
 }
