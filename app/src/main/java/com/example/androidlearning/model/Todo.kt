@@ -18,5 +18,7 @@ data class Todo(
     @ColumnInfo(name = "due_date")
     val dueDate: String,
     @ColumnInfo(name = "is_completed")
-    val isCompleted: Boolean
+    val isCompleted: Boolean,
+//    @ColumnInfo(name = "temp")
+//    val temp: Boolean
 )
