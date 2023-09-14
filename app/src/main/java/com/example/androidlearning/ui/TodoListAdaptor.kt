@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.androidlearning.databinding.TodoListBinding
+import com.example.androidlearning.model.Todo
+import com.example.androidlearning.ui.TodoUpateInsert
 
 class TodoListAdaptor: RecyclerView.Adapter<TodoViewHolder>() {
 
@@ -40,10 +42,9 @@ class TodoViewHolder(private val binding: TodoListBinding): RecyclerView.ViewHol
 
     fun updateTodo(todo: Todo){
         binding.root.setOnClickListener {
-            val intent = Intent(binding.root.context,TodoUpateInsert::class.java)
+            val intent = Intent(binding.root.context, TodoUpateInsert::class.java)
 
             intent.putExtra("TODO_ID", todo.id)
-            Log.i("Abhi", "adaptor " + todo.id.toString() + binding.root.context.toString())
             binding.root.context.startActivity(intent)
         }
     }

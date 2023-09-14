@@ -1,8 +1,10 @@
-package com.example.androidlearning
+package com.example.androidlearning.viewModel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.androidlearning.repository.TodoRepository
+import com.example.androidlearning.model.Todo
 import kotlinx.coroutines.launch
 
 class TodoUpdateInsertViewModel(private val repository: TodoRepository) : ViewModel() {

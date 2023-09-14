@@ -1,7 +1,8 @@
-package com.example.androidlearning
+package com.example.androidlearning.dao
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
+import com.example.androidlearning.model.Todo
 
 @Dao
 interface TodoDao {
@@ -10,9 +11,6 @@ interface TodoDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertTodo(todo: Todo)
-
-    @Update
-    suspend fun updateTodo(todo: Todo)
 
     @Delete
     suspend fun deleteTodo(todo: Todo)
