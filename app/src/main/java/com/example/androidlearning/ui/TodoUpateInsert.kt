@@ -8,9 +8,7 @@ import android.view.View
 import android.widget.DatePicker
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.graphics.component1
-import androidx.core.graphics.component2
-import androidx.core.graphics.component3
+import androidx.lifecycle.ViewModelProvider
 import com.example.androidlearning.R
 import com.example.androidlearning.databinding.TodoUpdateInsertBinding
 import com.example.androidlearning.db.MyDatabase
@@ -29,9 +27,10 @@ class TodoUpateInsert : AppCompatActivity() {
         binding = TodoUpdateInsertBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val repository = TodoRepository(MyDatabase.getInstance(applicationContext).todoDao())
-        viewModel =
-            TodoUpdateInsertViewModelFactory(repository).create(TodoUpdateInsertViewModel::class.java)
+        val repository = TodoRepository.getInstance(MyDatabase.getInstance(applicationContext).todoDao)
+        val factory = TodoUpdateInsertViewModelFactory(repository)
+
+        viewModel = ViewModelProvider(this, factory).get(TodoUpdateInsertViewModel::class.java)
 
         var todoId = intent.getLongExtra("TODO_ID", -999)
         Log.i("Abhi", "Update1 " + todoId.toString())
@@ -46,7 +45,7 @@ class TodoUpateInsert : AppCompatActivity() {
         binding.saveUpdateBtn.setOnClickListener {
             if (binding.etvTodoTitle.text.toString().isNotEmpty()) {
                 insertTodo(todoId)
-                goToHomePage()
+//                goToHomePage()
             } else Toast.makeText(this, "Title cannot be empty", Toast.LENGTH_SHORT).show()
         }
 
@@ -63,6 +62,8 @@ class TodoUpateInsert : AppCompatActivity() {
     private fun goToHomePage() {
         Log.i("Abhi", "home")
         val intent = Intent(this, HomePage::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         startActivity(intent)
     }
 
@@ -129,3 +130,9 @@ class TodoUpateInsert : AppCompatActivity() {
         datePickerDialog.show()
     }
 }
+
+/*
+If the target activity is already at the top of the task stack (FLAG_ACTIVITY_SINGLE_TOP), reuse it.
+If the target activity is not at the top, bring it to the top (FLAG_ACTIVITY_CLEAR_TOP),
+ potentially closing other activities on the way.
+ */

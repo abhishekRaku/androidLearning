@@ -1,10 +1,13 @@
 package com.example.androidlearning.ui
 
+import android.annotation.SuppressLint
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.androidlearning.TodoListAdaptor
 import com.example.androidlearning.databinding.HomePageBinding
@@ -22,34 +25,42 @@ class HomePage : AppCompatActivity() {
         binding = HomePageBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val repository = TodoRepository(MyDatabase.getInstance(applicationContext).todoDao())
-        viewModel = HomePageViewModelFactory(repository).create(HomePageViewModel::class.java)
+        val repository = TodoRepository.getInstance(MyDatabase.getInstance(applicationContext).todoDao)
+
+        val factory = HomePageViewModelFactory(repository)
+        viewModel = ViewModelProvider(this, factory).get(HomePageViewModel::class.java)
+//        viewModel = HomePageViewModelFactory(repository).create(HomePageViewModel::class.java)
         // have to read about factory
 
         // initializing todo list
-        intializeTodoList()
 
         binding.fabTodo.setOnClickListener {
             val intent = Intent(this, TodoUpateInsert::class.java)
             startActivity(intent)
         }
+        Log.i("why","whyyyy")
 
-       searchTodo()
+        intializeTodoList()
+        displayTodoList()
+//        searchTodo()
     }
+
+//    override fun onResume() {
+//        super.onResume()
+//        displayTodoList()
+//    }
 
     fun intializeTodoList() {
         binding.myRcTodoList.layoutManager = LinearLayoutManager(this)
         todoListAdapter = TodoListAdaptor()
         binding.myRcTodoList.adapter = todoListAdapter
-        displayTodoList()
     }
 
     private fun displayTodoList() {
-        viewModel.todoList.observe(this) {
-            Log.i("Abhi", it.toString())
+        viewModel.todoList.observe(this, Observer {
             todoListAdapter.setTodoList(it)
             todoListAdapter.notifyDataSetChanged()
-        }
+        })
     }
 
     private fun searchTodo(){
@@ -62,6 +73,7 @@ class HomePage : AppCompatActivity() {
                 return false
             }
 
+            @SuppressLint("SuspiciousIndentation")
             override fun onQueryTextChange(newText: String?): Boolean {
                 val searchQuery = "%$newText%"
                     updateList(searchQuery)

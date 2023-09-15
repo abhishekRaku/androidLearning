@@ -29,6 +29,7 @@ class TodoListAdaptor: RecyclerView.Adapter<TodoViewHolder>() {
     }
 
     fun setTodoList(list: List<Todo>){
+        Log.i("why","sdfsd")
         todoList.clear()
         todoList.addAll(list)
     }
@@ -49,6 +50,8 @@ class TodoViewHolder(private val binding: TodoListBinding): RecyclerView.ViewHol
         binding.root.setOnClickListener {
             val intent = Intent(binding.root.context, TodoUpateInsert::class.java)
             intent.putExtra("TODO_ID", todo.id)
+            intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
             binding.root.context.startActivity(intent)
         }
     }
