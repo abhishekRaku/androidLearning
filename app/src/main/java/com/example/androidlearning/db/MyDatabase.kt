@@ -13,11 +13,11 @@ abstract class MyDatabase : RoomDatabase() {
 
     companion object {
         @Volatile
-        private var INSTANCE: MyDatabase? = null
+        private var instance: MyDatabase? = null
 
         fun getInstance(context: Context): MyDatabase {
             synchronized(this) {
-                var instance = INSTANCE
+                instance = null
                 if (instance == null) {
                     instance = Room.databaseBuilder(
                         context.applicationContext,
@@ -25,7 +25,7 @@ abstract class MyDatabase : RoomDatabase() {
                         "my_database"
                     ).build()
                 }
-                return instance
+                return instance!!
             }
         }
     }

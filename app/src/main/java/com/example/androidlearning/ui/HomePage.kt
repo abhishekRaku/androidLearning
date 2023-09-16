@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.androidlearning.TodoListAdaptor
@@ -15,11 +14,14 @@ import com.example.androidlearning.db.MyDatabase
 import com.example.androidlearning.repository.TodoRepository
 import com.example.androidlearning.viewModel.HomePageViewModel
 import com.example.androidlearning.viewModel.HomePageViewModelFactory
+import com.example.androidlearning.viewModel.SharedViewModel
+import com.example.androidlearning.viewModel.SharedViewModelFactory
 
 class HomePage : AppCompatActivity() {
     private lateinit var binding: HomePageBinding
     private lateinit var todoListAdapter: TodoListAdaptor
     private lateinit var viewModel: HomePageViewModel
+    private lateinit var sharedViewModel: SharedViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = HomePageBinding.inflate(layoutInflater)
@@ -30,7 +32,13 @@ class HomePage : AppCompatActivity() {
         val factory = HomePageViewModelFactory(repository)
         viewModel = ViewModelProvider(this, factory).get(HomePageViewModel::class.java)
 //        viewModel = HomePageViewModelFactory(repository).create(HomePageViewModel::class.java)
-        // have to read about factory
+
+        val fac2 = SharedViewModelFactory.getInstance(repository)
+        sharedViewModel = ViewModelProvider(this,fac2 ).get(SharedViewModel::class.java)
+        val hashCode = System.identityHashCode(sharedViewModel)
+
+        // Log the hash code to check if it's the same in both activities
+        Log.d("ViewModelTest", "FirstActivity ViewModel hashCode: $hashCode")
 
         // initializing todo list
 
@@ -38,11 +46,11 @@ class HomePage : AppCompatActivity() {
             val intent = Intent(this, TodoUpateInsert::class.java)
             startActivity(intent)
         }
-        Log.i("why","whyyyy")
+        Log.i("why","HomePage created")
 
         intializeTodoList()
         displayTodoList()
-//        searchTodo()
+        searchTodo()
     }
 
 //    override fun onResume() {
@@ -52,15 +60,18 @@ class HomePage : AppCompatActivity() {
 
     fun intializeTodoList() {
         binding.myRcTodoList.layoutManager = LinearLayoutManager(this)
-        todoListAdapter = TodoListAdaptor()
+        todoListAdapter = TodoListAdaptor(){
+            id: Long -> gotoSecond(id)
+        }
         binding.myRcTodoList.adapter = todoListAdapter
     }
 
     private fun displayTodoList() {
-        viewModel.todoList.observe(this, Observer {
+        viewModel.todoList.observe(this) {
+            Log.i("why","todolist observer")
             todoListAdapter.setTodoList(it)
             todoListAdapter.notifyDataSetChanged()
-        })
+        }
     }
 
     private fun searchTodo(){
@@ -88,6 +99,17 @@ class HomePage : AppCompatActivity() {
             }
 
         })
+    }
+
+    private fun gotoSecond(id: Long){
+        val intent = Intent(this, TodoUpateInsert::class.java)
+        intent.putExtra("TODO_ID", id)
+        startActivity(intent)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.i("why","1 Noo")
     }
 
 }

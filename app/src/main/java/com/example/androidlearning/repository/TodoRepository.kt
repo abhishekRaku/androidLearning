@@ -1,5 +1,7 @@
 package com.example.androidlearning.repository
 
+import android.util.Log
+import androidx.lifecycle.LiveData
 import com.example.androidlearning.dao.TodoDao
 import com.example.androidlearning.model.Todo
 
@@ -14,20 +16,20 @@ class TodoRepository(private val todoDao: TodoDao) {
 
     suspend fun getTodoById(id: Long) = todoDao.getTodoById(id)
 
-    fun getAllTodoByTitle(query: String) = todoDao.getAllTodoByTitle(query)
+    fun getAllTodoByTitle(query: String): LiveData<List<Todo>> = todoDao.getAllTodoByTitle(query)
 
     companion object {
 
         @Volatile
-        private var INSTANCE: TodoRepository? = null
+        private var instance : TodoRepository? = null
 
         fun getInstance(todoDao: TodoDao): TodoRepository {
             synchronized(this) {
-                var instance = INSTANCE
                 if (instance == null) {
+                    Log.i("Repo","repo initilaztion")
                     instance = TodoRepository(todoDao)
                 }
-                return instance
+                return instance!!
             }
         }
     }

@@ -10,7 +10,7 @@ import com.example.androidlearning.databinding.TodoListBinding
 import com.example.androidlearning.model.Todo
 import com.example.androidlearning.ui.TodoUpateInsert
 
-class TodoListAdaptor: RecyclerView.Adapter<TodoViewHolder>() {
+class TodoListAdaptor(private val goto: (Long) -> Unit): RecyclerView.Adapter<TodoViewHolder>() {
 
     private val todoList = mutableListOf<Todo>()
 
@@ -21,7 +21,8 @@ class TodoListAdaptor: RecyclerView.Adapter<TodoViewHolder>() {
 
     override fun onBindViewHolder(holder: TodoViewHolder, position: Int) {
         holder.setTodo(todoList[position])
-        holder.updateTodo(todoList[position])
+        holder.goToo(goto, todoList[position])
+//        holder.updateTodo(todoList[position])
     }
 
     override fun getItemCount(): Int {
@@ -49,10 +50,17 @@ class TodoViewHolder(private val binding: TodoListBinding): RecyclerView.ViewHol
     fun updateTodo(todo: Todo){
         binding.root.setOnClickListener {
             val intent = Intent(binding.root.context, TodoUpateInsert::class.java)
-            intent.putExtra("TODO_ID", todo.id)
+            Log.i("Abhi", binding.root.context.toString())
             intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            intent.putExtra("TODO_ID", todo.id)
             binding.root.context.startActivity(intent)
+        }
+    }
+
+    fun goToo(goto: (Long) -> Unit, todo: Todo){
+        binding.root.setOnClickListener {
+            goto(todo.id)
         }
     }
 }

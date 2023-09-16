@@ -14,6 +14,8 @@ import com.example.androidlearning.databinding.TodoUpdateInsertBinding
 import com.example.androidlearning.db.MyDatabase
 import com.example.androidlearning.model.Todo
 import com.example.androidlearning.repository.TodoRepository
+import com.example.androidlearning.viewModel.SharedViewModel
+import com.example.androidlearning.viewModel.SharedViewModelFactory
 import com.example.androidlearning.viewModel.TodoUpdateInsertViewModel
 import com.example.androidlearning.viewModel.TodoUpdateInsertViewModelFactory
 import java.util.*
@@ -22,8 +24,10 @@ import java.util.*
 class TodoUpateInsert : AppCompatActivity() {
     private lateinit var binding: TodoUpdateInsertBinding
     private lateinit var viewModel: TodoUpdateInsertViewModel
+    private lateinit var sharedViewModel: SharedViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Log.i("why","2 c")
         binding = TodoUpdateInsertBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -45,7 +49,7 @@ class TodoUpateInsert : AppCompatActivity() {
         binding.saveUpdateBtn.setOnClickListener {
             if (binding.etvTodoTitle.text.toString().isNotEmpty()) {
                 insertTodo(todoId)
-//                goToHomePage()
+                goToHomePage()
             } else Toast.makeText(this, "Title cannot be empty", Toast.LENGTH_SHORT).show()
         }
 
@@ -56,6 +60,14 @@ class TodoUpateInsert : AppCompatActivity() {
         binding.btnCancelDelete.setOnClickListener {
             cancelDeleteTodo()
         }
+
+        val fac2 = SharedViewModelFactory.getInstance(repository)
+        sharedViewModel = ViewModelProvider(this,fac2 ).get(SharedViewModel::class.java)
+
+        val hashCode = System.identityHashCode(sharedViewModel)
+
+        // Log the hash code to check if it's the same in both activities
+        Log.d("ViewModelTest", "FirstActivity ViewModel hashCode: $hashCode")
 
     }
 
@@ -128,6 +140,11 @@ class TodoUpateInsert : AppCompatActivity() {
             day
         )
         datePickerDialog.show()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.i("why","2 destory")
     }
 }
 

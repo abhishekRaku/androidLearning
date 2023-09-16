@@ -7,7 +7,7 @@ import com.example.androidlearning.repository.TodoRepository
 
 class HomePageViewModel(private val repository: TodoRepository):ViewModel() {
 
-    val todoList = repository.getAllTodos()
+    val todoList: LiveData<List<Todo>> = repository.getAllTodos()
 
 
 //    fun getAllTodo(): LiveData<List<Todo>>{
