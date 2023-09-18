@@ -2,7 +2,6 @@ package com.example.androidlearning
 
 import android.content.Intent
 import android.graphics.Color
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -42,6 +41,8 @@ class TodoViewHolder(private val binding: TodoListBinding): RecyclerView.ViewHol
         binding.todoDueDate.text = todo.dueDate
         if(todo.isCompleted){
             binding.root.setBackgroundColor(Color.GREEN)
+        }else{
+            binding.root.setBackgroundColor(Color.WHITE)
         }
     }
 

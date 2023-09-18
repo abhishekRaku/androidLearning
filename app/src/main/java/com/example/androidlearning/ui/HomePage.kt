@@ -1,10 +1,11 @@
 package com.example.androidlearning.ui
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.androidlearning.TodoListAdaptor
 import com.example.androidlearning.databinding.HomePageBinding
@@ -23,18 +24,17 @@ class HomePage : AppCompatActivity() {
         setContentView(binding.root)
 
         val repository = TodoRepository(MyDatabase.getInstance(applicationContext).todoDao())
-        viewModel = HomePageViewModelFactory(repository).create(HomePageViewModel::class.java)
-        // have to read about factory
+        val factory = HomePageViewModelFactory(repository)
+        viewModel = ViewModelProvider(this, factory).get(HomePageViewModel::class.java)
 
         // initializing todo list
         intializeTodoList()
+        searchTodo()
 
         binding.fabTodo.setOnClickListener {
             val intent = Intent(this, TodoUpateInsert::class.java)
             startActivity(intent)
         }
-
-       searchTodo()
     }
 
     fun intializeTodoList() {

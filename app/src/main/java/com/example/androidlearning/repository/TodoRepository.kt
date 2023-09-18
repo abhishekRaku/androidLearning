@@ -16,4 +16,17 @@ class TodoRepository(private val todoDao: TodoDao) {
 
     fun getAllTodoByTitle(query: String) = todoDao.getAllTodoByTitle(query)
 
+    companion object {
+        @Volatile
+        private var instance: TodoRepository? = null
+
+        fun getInstance(todoDao: TodoDao): TodoRepository {
+            synchronized(this) {
+                if (instance == null) {
+                    instance = TodoRepository(todoDao)
+                }
+                return instance!!
+            }
+        }
+    }
 }

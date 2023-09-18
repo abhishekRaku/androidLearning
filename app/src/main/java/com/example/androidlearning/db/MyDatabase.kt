@@ -1,9 +1,9 @@
 package com.example.androidlearning.db
 
 import android.content.Context
-import androidx.room.RoomDatabase
 import androidx.room.Database
 import androidx.room.Room
+import androidx.room.RoomDatabase
 import com.example.androidlearning.dao.TodoDao
 import com.example.androidlearning.model.Todo
 
@@ -13,11 +13,10 @@ abstract class MyDatabase : RoomDatabase() {
 
     companion object {
         @Volatile
-        private var INSTANCE: MyDatabase? = null
+        private var instance: MyDatabase? = null
 
         fun getInstance(context: Context): MyDatabase {
             synchronized(this) {
-                var instance = INSTANCE
                 if (instance == null) {
                     instance = Room.databaseBuilder(
                         context.applicationContext,
@@ -25,7 +24,7 @@ abstract class MyDatabase : RoomDatabase() {
                         "my_database"
                     ).build()
                 }
-                return instance
+                return instance!!
             }
         }
     }
