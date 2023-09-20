@@ -16,6 +16,8 @@ class TodoRepository(private val todoDao: TodoDao) {
 
     fun getAllTodoByTitle(query: String) = todoDao.getAllTodoByTitle(query)
 
+    suspend fun deleteAllTodosById(ids: List<Todo>) = todoDao.deleteAllTodosById(ids)
+
     companion object {
         @Volatile
         private var instance: TodoRepository? = null

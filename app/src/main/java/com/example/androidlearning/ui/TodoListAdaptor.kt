@@ -2,6 +2,7 @@ package com.example.androidlearning
 
 import android.content.Intent
 import android.graphics.Color
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -9,7 +10,7 @@ import com.example.androidlearning.databinding.TodoListBinding
 import com.example.androidlearning.model.Todo
 import com.example.androidlearning.ui.TodoUpateInsert
 
-class TodoListAdaptor: RecyclerView.Adapter<TodoViewHolder>() {
+class TodoListAdaptor(private val onLongClick: (Int) -> Unit): RecyclerView.Adapter<TodoViewHolder>() {
 
     private val todoList = mutableListOf<Todo>()
 
@@ -21,6 +22,7 @@ class TodoListAdaptor: RecyclerView.Adapter<TodoViewHolder>() {
     override fun onBindViewHolder(holder: TodoViewHolder, position: Int) {
         holder.setTodo(todoList[position])
         holder.updateTodo(todoList[position])
+        holder.onLongClickBehavior(position, onLongClick)
     }
 
     override fun getItemCount(): Int {
@@ -51,6 +53,14 @@ class TodoViewHolder(private val binding: TodoListBinding): RecyclerView.ViewHol
             val intent = Intent(binding.root.context, TodoUpateInsert::class.java)
             intent.putExtra("TODO_ID", todo.id)
             binding.root.context.startActivity(intent)
+        }
+    }
+
+    fun onLongClickBehavior(position: Int, onLongClick: (Int) -> Unit){
+        binding.root.setOnLongClickListener{
+            onLongClick(position)
+            Log.i("Abhi", "Todo item long click")
+            true
         }
     }
 }

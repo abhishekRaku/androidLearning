@@ -21,4 +21,7 @@ interface TodoDao {
 
     @Query("SELECT * FROM todo_table WHERE title LIKE :query")
     fun getAllTodoByTitle(query: String): LiveData<List<Todo>>
+
+    @Delete
+    suspend fun deleteAllTodosById(ids: List<Todo>)
 }
